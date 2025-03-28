@@ -72,7 +72,7 @@ export default function UserForm(props: Props) {
         <Toast.Body>{error}</Toast.Body>
       </Toast>
       <Form.Group>
-        <Form.Label>Info</Form.Label>
+        <Form.Label className="bold">Info</Form.Label>
         <InputGroup className="mb-3">
           <Form.Control
             name="first_name"
@@ -119,7 +119,7 @@ export default function UserForm(props: Props) {
         </InputGroup>
       </Form.Group>
       <Form.Group>
-        <Form.Label>Role</Form.Label>
+        <Form.Label className="bold">Role</Form.Label>
         <Form.Check
           label="Regular - Can't delete members"
           name="role"

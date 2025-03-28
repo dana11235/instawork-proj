@@ -1,2 +1,3 @@
 api/db.sqlite3
 frontend/node_modules
+api/backend/__pycache__

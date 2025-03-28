@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from api.models import User
+from backend.models import User
 from rest_framework import routers, serializers, viewsets
 
 # Serializers define the API representation.
