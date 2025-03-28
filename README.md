@@ -33,6 +33,8 @@ npm run build
 npm run start
 ```
 
+You can also run `npm run dev` to run the dev server, but it will run on port 5173 by default.
+
 ## Accessing the App
 
 After setting up and running the project, it should be available at http://localhost:3000

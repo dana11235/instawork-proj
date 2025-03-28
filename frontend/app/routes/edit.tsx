@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import UserForm from "../components/userForm";
 import "./list.css";
 import type { User } from "../types/user";
-import { formatPhone, URL } from "../utils";
+import { formatPhone, URL, parseErrors } from "../utils";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "New User Page" }, { name: "new", content: "New User" }];
@@ -28,7 +28,7 @@ export default function Edit() {
     getUser();
   }, [userId]);
 
-  const submit = async (formData: User) => {
+  const submit = async (formData: User, setError: (error: string) => void) => {
     const response = await fetch(URL.show(userId), {
       method: "PUT",
       headers: {
@@ -37,7 +37,8 @@ export default function Edit() {
       body: JSON.stringify(formData),
     });
     if (!response.ok) {
-      console.log("Error submitting form");
+      // This isn't the prettiest way to handle server-side errors, but we catch most errors client-side
+      setError(parseErrors(await response.json()));
     } else {
       location.href = "/";
     }

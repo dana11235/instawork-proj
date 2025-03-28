@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import { Form, Button, InputGroup } from "react-bootstrap";
+import { Form, Button, InputGroup, Toast, Row, Col } from "react-bootstrap";
 import { Link } from "react-router";
 import type { User } from "../types/user";
 import { Roles } from "../utils";
 import "./userForm.css";
 
 type Props = {
-  submit: (formData: User) => void;
+  submit: (formData: User, setError: (error: string) => void) => string;
   delete?: () => void;
   user?: User;
 };
@@ -22,6 +22,8 @@ const newUser = {
 
 export default function UserForm(props: Props) {
   const [formData, setFormData] = useState(newUser);
+  const [error, setError] = useState<string>("");
+  const [showToast, setShowToast] = useState(false);
   useEffect(() => {
     if (props.user) setFormData(props.user);
   }, [props.user]);
@@ -41,6 +43,12 @@ export default function UserForm(props: Props) {
     });
   };
 
+  const setErrorMessage = (error: string) => {
+    console.log("e", error);
+    setError(error);
+    setShowToast(true);
+  };
+
   const handleSubmit = (event: FormEvent) => {
     // Use our custom submission logic
     event.preventDefault();
@@ -48,12 +56,21 @@ export default function UserForm(props: Props) {
     setValidated(true);
     const form: any = event.currentTarget;
     if (form?.checkValidity() === true) {
-      console.log("submitting", formData);
-      props.submit(formData);
+      props.submit(formData, setErrorMessage);
     }
   };
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Toast
+        onClose={() => setShowToast(false)}
+        show={showToast}
+        delay={5000}
+        bg={"danger"}
+        className="wide"
+        autohide
+      >
+        <Toast.Body>{error}</Toast.Body>
+      </Toast>
       <Form.Group>
         <Form.Label>Info</Form.Label>
         <InputGroup className="mb-3">

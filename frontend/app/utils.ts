@@ -17,3 +17,9 @@ export const Roles = {
     USER: 1,
     ADMIN: 2
 }
+
+export const parseErrors = (errors: {[key: string]: string}) => {
+  return Object.keys(errors)
+  .map((key) => `${key}: ${errors[key]}`)
+  .join(", ");
+}
